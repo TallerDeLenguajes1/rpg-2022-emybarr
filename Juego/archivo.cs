@@ -27,10 +27,25 @@ namespace Juego
                    var dateAndTime = DateTime.Now;
                    var Date = dateAndTime.ToShortDateString();
                 
-                    strWrite.WriteLine("<{0};{1};{2}>\n",vencedor.Dato.Nombre1 ,vencedor.Dato.Tipo, Date);
+                    strWrite.WriteLine("{0};{1};{2}\n",vencedor.Dato.Nombre1 ,vencedor.Dato.Tipo, Date);
                     strWrite.Close();
                 }
             }
+
+            public string AbrirArchivo(string nombreArchivo)
+        {
+            string documento;
+              using (var archivoOpen = new FileStream(nombreArchivo, FileMode.Open))
+            {
+                using (var strReader = new StreamReader(archivoOpen))
+                {
+                    documento = strReader.ReadToEnd();
+                    archivoOpen.Close();
+                }
+            }
+            return documento;
+        }
+
 
 
     }
