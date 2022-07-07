@@ -20,6 +20,17 @@ namespace Juego
         public int PoderDefensa { get => poderDefensa; set => poderDefensa = value; }
 
 
+        public caracteristicas()
+        {
+            Random rand = new Random();
+            Armadura=  rand.Next(1, 10);
+            Destreza = rand.Next(1, 5);
+            Fuerza =  rand.Next(1, 10);
+            Nivel =  rand.Next(1, 10);
+            Velocidad =  rand.Next(1, 10);
+        }
+
+
 
       
     }

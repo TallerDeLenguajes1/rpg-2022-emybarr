@@ -10,208 +10,214 @@ namespace Juego
     {
         static void Main(string[] args)
         {
-            Random rand = new Random();
-            archivo archivo = new archivo();
-
-            
-
-            int opcion, opcionj, opcionc, opciong; 
-            
-             string Vencedor;
-        
-            List<personaje> Grupo= new List<personaje>();
-    
-            personaje player1 = new personaje();
-            personaje player2 = new personaje();
-            personaje player3 = new personaje();
-            personaje player4 = new personaje();
-       
-
- 
-        do{
-           
-         do
-         {  
+          List<personaje> GrupoA= new List<personaje>();
+          List<personaje> GrupoB= new List<personaje>();
+          List<personaje> BatallaFinal= new List<personaje>();
+          archivo archivo = new archivo();
+          int opcion, opcionj, prim, seg;
+          string vencedor ;
+      
+           Random rand = new Random();
+do{
+         do{
             Console.WriteLine("Seleccione Opcion");
             Console.WriteLine("1 - Iniciar un juego");
-            Console.WriteLine("2 - Ranking de Ganadores");
+            Console.WriteLine("2 - Lista de Ganadores");
             Console.WriteLine("3 - Salir");
             opcion= Convert.ToInt32(Console.ReadLine());
+         }while(opcion < 1 || opcion > 4);
 
-         }while(opcion < 1 || opcion > 3);
-
-        if(opcion == 2){
-                string ruta = @"C:\taller\rpg-2022-emybarr\Juego\";
-                List<string[]> ArchivoCsv = archivo.LeerCsv(ruta,"Ganador.csv", ';');
-                foreach(string[] filas in ArchivoCsv ){
-                    Console.WriteLine(filas[0]);
-
+         if(opcion == 2){
+                  Console.WriteLine("hola ");
                 }
+}while(opcion ==2);
 
-        }
-
-         if(opcion == 1){
+         if(opcion == 1)
+         {
 
             Console.WriteLine("Elija la forma de crear los jugadores ");
             do
             {
             Console.WriteLine(" 1- Crear los 8 jugadores de forma aleatoria ");
-            Console.WriteLine(" 2- Crear cada jugadores ya sea en de forma manual o aleatoria ");
-             Console.WriteLine("3- Crear cada jugadores de lista ganadores");
+             Console.WriteLine("2- Crear cada jugadores de lista ganadores");
             opcionj=  Convert.ToInt32(Console.ReadLine());
-            }while(opcionj > 3);
+            }while(opcionj > 2);
+         }
+          for(int i = 0; i < 4; i++)
+          {
+            GrupoA.Add(new personaje( new datos(), new caracteristicas()));
+          }
 
-            if(opcionj == 1)
+          for(int i = 0; i < 4; i++)
+          {
+            GrupoB.Add(new personaje( new datos(), new caracteristicas()));
+          }
+
+          Console.WriteLine("\n<<<<<<<<< Grupo A <<<<<<<<<<\n");
+
+          
+
+          Console.WriteLine("-------------BATALLAS GRUPO B ------------------");
+
+            while (GrupoA.Count != 1)
             {
-                Console.WriteLine("Se crearan 4 jugadores ");
-                player1 =player1.crearPersonaje();
-                player2 =player2.crearPersonaje();
-                player3 =player3.crearPersonaje();
-                player4 =player4.crearPersonaje();
-               
-                Grupo.Add(player1);
-                Grupo.Add(player3);
-                Grupo.Add(player2);
-                Grupo.Add(player4);
-               
-
-                Console.WriteLine("Grupo");
-                foreach (personaje per in Grupo)
-            {
-               per.MostrarNombre();
-            }
-            }
-
-            if(opcionj == 2){
-                Console.WriteLine("Debera crear 4 personajes puede elegir por cada personaje si lo crea manual o aleatoriamente ");
-                do{
-                Console.WriteLine("Primer player ");
-                Console.WriteLine("1-Manualmente  2-Aleatoriamente");
-                 opcionc=  Convert.ToInt32(Console.ReadLine());
-                }while(opcionc > 3);
-
-                if(opcionc == 1)
-                {
-                 player1 =player1.CrearManualmente();
-                 Grupo.Add(player1);
-                }else{
-                 player1 =player1.crearPersonaje();
-                  Grupo.Add(player1);
-                }
-                
-                //////////////////////////////////
-                do{
-                Console.WriteLine("Segundo player ");
-                Console.WriteLine("1-Manualmente  2-Aleatoriamente");
-                 opcionc=  Convert.ToInt32(Console.ReadLine());
-                }while(opcionc > 3);
-
-                if(opcionc == 1)
-                {
-                 player2 =player2.CrearManualmente();
-                  Grupo.Add(player2);
-                }else{
-                 player2 =player2.crearPersonaje();
-                  Grupo.Add(player2);
-                }
-               
-                ///////////////////////////////////
-                do{
-                Console.WriteLine("Tercer player ");
-                Console.WriteLine("1-Manualmente  2-Aleatoriamente");
-                opcionc=  Convert.ToInt32(Console.ReadLine());
-                }while(opcionc > 3);
-
-                if(opcionc == 1)
-                {
-                 player3 =player3.CrearManualmente();
-                  Grupo.Add(player3);
-                }else{
-                 player3 =player3.crearPersonaje();
-                  Grupo.Add(player3);
-                }
-              
-                ///////////////////////////////////
-                do{
-                Console.WriteLine("Cuarto player ");
-                Console.WriteLine("1-Manualmente  2-Aleatoriamente");
-                 opcionc=  Convert.ToInt32(Console.ReadLine());
-                }while(opcionc > 3);
-
-                if(opcionc == 1)
-                {
-                 player4 =player4.CrearManualmente();
-                 Grupo.Add(player4);
-                }else{
-                 player4 =player4.crearPersonaje();
-                 Grupo.Add(player4);
-                }
-
-                  Console.WriteLine("Grupo");
-                foreach (personaje per in Grupo)
-            {
-               per.MostrarNombre();
-            }
-            }
-            ///////////////////////////////
-
-            while (Grupo.Count != 1)
-            {
-                int prim = rand.Next(Grupo.Count);
-                int seg = rand.Next(Grupo.Count);
+                 prim = rand.Next(GrupoA.Count);
+                 seg = rand.Next(GrupoA.Count);
             
 
-                for (int i = 1; i < 3; i++)
+                for (int i = 1; i < 4; i++)
                 {
                     Console.WriteLine($"\t\nPelea {i}");
+                    Console.WriteLine( "       " + GrupoA[prim].Dato.Nombre1 + "         VS       " + GrupoA[seg].Dato.Nombre1  );
                     Console.WriteLine(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
                     while (prim == seg)
                     {
-                        seg = rand.Next(Grupo.Count);
+                        seg = rand.Next(GrupoA.Count);
                     }
-                    
-                    Grupo[prim].Atacar();
-                    Grupo[seg].Atacar();
-                    Grupo[prim].MostrarSalud();
-                    Grupo[seg].MostrarSalud();
 
+                       GrupoA[prim].Atacar();
+                       GrupoA[seg].Atacar();
+                       Console.WriteLine("Salud : " + GrupoA[prim].Dato.Salud +  "       VS     " + " Salud : " + GrupoA[seg].Dato.Salud);
+                    
                 }
-                 
-                Console.WriteLine("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
-                if ( Grupo[prim].nsalud()<  Grupo[seg].nsalud())
+
+                Console.WriteLine(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+                if ( GrupoA[prim].Dato.Salud <  GrupoA[seg].Dato.Salud)
                 {
-                    Vencedor = Grupo[seg].MNombre();
-                    Console.WriteLine("El ganador es {0}  ", Vencedor);
-                    Grupo[seg].mejorarPersonaje();
-                    Grupo[seg].mostrarGanador();
-                    Grupo.RemoveAt(prim);
+                    vencedor = GrupoA[seg].Dato.Nombre1;
+                    Console.WriteLine("El ganador es {0}  ", vencedor);
+                    Console.WriteLine($"Tipo: {GrupoA[seg].Dato.Tipo}");
+                    Console.WriteLine($"Nivel: {GrupoA[seg].Carc.Nivel}");
+                    GrupoA[seg].mejorarPersonaje();
+                    GrupoA.RemoveAt(prim);
 
                 }
                 else
                 {
-                    Vencedor = Grupo[prim].MNombre();
-                    Console.WriteLine("El ganador es {0}  ", Vencedor);
-                    Grupo[prim].mejorarPersonaje();
-                    Grupo[prim].mostrarGanador();
-                    Grupo.RemoveAt(seg);
+                     vencedor = GrupoA[prim].Dato.Nombre1;
+                    Console.WriteLine("El ganador es {0}  ", vencedor);
+                    Console.WriteLine($"Tipo: {GrupoA[prim].Dato.Tipo}");
+                    Console.WriteLine($"Nivel: {GrupoA[prim].Carc.Nivel}");
+                    GrupoA[prim].mejorarPersonaje();
+                    GrupoA.RemoveAt(seg);
                 }
-                string n ;
+                }
+
+                foreach(personaje per in GrupoA){
+                  BatallaFinal.Add(per);
+                }
+
+                Console.WriteLine("-------------BATALLAS GRUPO B ------------------");
+
+                 while (GrupoB.Count != 1)
+            {
+                 prim = rand.Next(GrupoA.Count);
+                 seg = rand.Next(GrupoA.Count);
+            
+
+                for (int i = 1; i < 4; i++)
+                {
+                    Console.WriteLine($"\t\nPelea {i}");
+                    Console.WriteLine( "       " + GrupoB[prim].Dato.Nombre1 + "         VS       " + GrupoB[seg].Dato.Nombre1  );
+                    Console.WriteLine(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+                    while (prim == seg)
+                    {
+                        seg = rand.Next(GrupoB.Count);
+                    }
+
+                       GrupoB[prim].Atacar();
+                       GrupoB[seg].Atacar();
+                       Console.WriteLine("Salud : " + GrupoB[prim].Dato.Salud +  "       VS     " + " Salud : " + GrupoB[seg].Dato.Salud);
+                    
+                }
+
+                Console.WriteLine(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+                if ( GrupoB[prim].Dato.Salud <  GrupoB[seg].Dato.Salud)
+                {
+                    vencedor = GrupoB[seg].Dato.Nombre1;
+                    Console.WriteLine("El ganador es {0}  ", vencedor);
+                    Console.WriteLine($"Tipo: {GrupoB[seg].Dato.Tipo}");
+                    Console.WriteLine($"Nivel: {GrupoB[seg].Carc.Nivel}");
+                    GrupoB[seg].mejorarPersonaje();
+                    GrupoB.RemoveAt(prim);
+
+                }
+                else
+                {
+                     vencedor = GrupoB[prim].Dato.Nombre1;
+                    Console.WriteLine("El ganador es {0}  ", vencedor);
+                    Console.WriteLine($"Tipo: {GrupoB[prim].Dato.Tipo}");
+                    Console.WriteLine($"Nivel: {GrupoB[prim].Carc.Nivel}");
+                     GrupoB[prim].mejorarPersonaje();
+                    GrupoB.RemoveAt(seg);
+                }
+                }
+
+                foreach(personaje per in GrupoB){
+                  BatallaFinal.Add(per);
+                }
+                
+                 Console.WriteLine("------------------BATLLA FINAL---------------------------");
+
+                foreach(personaje p in BatallaFinal){
+                   Console.WriteLine($"Nombre: {p.Dato.Nombre1}");
+                   Console.WriteLine($"Tipo: {p.Dato.Tipo}");
+                   Console.WriteLine($"Nivel: {p.Carc.Nivel}");
+                   Console.WriteLine("---------------------------------------------");
+                }
+                 while (BatallaFinal.Count != 1)
+            {
+                 prim = rand.Next(BatallaFinal.Count);
+                 seg = rand.Next(BatallaFinal.Count);
+            
+
+                for (int i = 1; i < 4; i++)
+                {
+                    Console.WriteLine($"\t\nPelea {i}");
+                    Console.WriteLine( "       " + BatallaFinal[prim].Dato.Nombre1 + "         VS       " + BatallaFinal[seg].Dato.Nombre1  );
+                    Console.WriteLine(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+                    while (prim == seg)
+                    {
+                        seg = rand.Next(BatallaFinal.Count);
+                    }
+
+                       BatallaFinal[prim].Atacar();
+                       BatallaFinal[seg].Atacar();
+                       Console.WriteLine("Salud : " + BatallaFinal[prim].Dato.Salud +  "       VS     " + " Salud : " + BatallaFinal[seg].Dato.Salud);
+                    
+                }
+
+                Console.WriteLine(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+                if ( BatallaFinal[prim].Dato.Salud <  BatallaFinal[seg].Dato.Salud)
+                {
+                    vencedor =BatallaFinal[seg].Dato.Nombre1;
+                    Console.WriteLine("El ganador es {0}  ", vencedor);
+                    Console.WriteLine($"Tipo: {BatallaFinal[seg].Dato.Tipo}");
+                    Console.WriteLine($"Nivel: {BatallaFinal[seg].Carc.Nivel}");
+                    BatallaFinal[seg].mejorarPersonaje();
+                    BatallaFinal.RemoveAt(prim);
+                    Console.WriteLine(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+
+                }
+                else
+                {
+                    vencedor = BatallaFinal[prim].Dato.Nombre1;
+                    Console.WriteLine("El ganador es {0}  ", vencedor);
+                    Console.WriteLine($"Tipo: {BatallaFinal[prim].Dato.Tipo}");
+                    Console.WriteLine($"Nivel: {BatallaFinal[prim].Carc.Nivel}");
+                    BatallaFinal[prim].mejorarPersonaje();
+                    BatallaFinal.RemoveAt(seg);
+                    Console.WriteLine(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+                }
+
+                   archivo.guardarvencedor("Ganador",BatallaFinal[0], ".csv");
+                }
+                
+    }
+    
+      }
+      
+       }
+
 
         
-              
-                archivo.guardarvencedor("Ganador",Grupo[0], ".csv");
-                string json = "jugadores.json";
-                string jugadoresJson =JsonSerializer.Serialize(Grupo);
-                archivo.GuardarArchivo( json, jugadoresJson );
-
-              
-            }
-              
-            }
-         
-
-    }while (opcion != 3);
-     
-}
-} 
-}
