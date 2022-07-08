@@ -1,6 +1,10 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Net;
 
 
 
@@ -24,7 +28,7 @@ do{
          do{
             Console.WriteLine("Seleccione Opcion");
             Console.WriteLine("1 - Iniciar un juego");
-            Console.WriteLine("2 - Lista de Ganadores");
+            Console.WriteLine("2 - Ganador anterior");
             Console.WriteLine("3 - Salir");
             opcion= Convert.ToInt32(Console.ReadLine());
          }while(opcion < 1 || opcion > 4);
@@ -60,6 +64,7 @@ do{
             Console.WriteLine("\n<<<<<<<<< Jugadores del Grupo B <<<<<<<<<<\n");
              foreach(personaje p in GrupoB){
               Console.WriteLine(p.Dato.Nombre1);
+          
             }
 
           
@@ -111,6 +116,8 @@ do{
            foreach(personaje p in listaGrupoBJson)
            {
             Console.WriteLine(p.Dato.Nombre1);
+       
+            
            }
            Console.WriteLine("-------------BATALLAS GRUPO A ------------------");
           game.Pelea(GrupoA);
@@ -130,6 +137,7 @@ do{
           Console.WriteLine("------------------GANADOR---------------------------");
           foreach(personaje per in BatallaFinal){
                   Console.WriteLine("                 " + per.Dato.Nombre1);
+                  Console.WriteLine(per.Dato.Frutafavorita1);
           }
            Console.WriteLine("<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
 
@@ -161,5 +169,11 @@ do{
 }
     }while(opcion !=3);
         }
-}
-}
+
+        
+    }
+
+
+    }
+
+

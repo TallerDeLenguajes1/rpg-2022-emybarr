@@ -1,3 +1,12 @@
+
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Net;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+
+
 namespace Juego
 {
     public class datos
@@ -40,6 +49,10 @@ namespace Juego
         private int edad;
         private float salud;
         private string tipo;
+
+        private List<fruta> frutafavorita; 
+
+
        
 
         public string Nombre1 { get => nombre; set => nombre = value; }
@@ -50,6 +63,8 @@ namespace Juego
         public string Tipo { get => tipo; set => tipo = value; }
        
         public float Salud { get => salud; set => salud = value; }
+        
+        public List<fruta> Frutafavorita1 { get => frutafavorita; set => frutafavorita = value; }
 
         public int calcularEdad(DateTime FechaDeNacimiento)
         {
@@ -75,6 +90,46 @@ namespace Juego
             FechaDeNacimiento =  new DateTime(rand.Next(1500, 2020), rand.Next(1, 12),rand.Next(1, 31));
             Edad= calcularEdad(FechaDeNacimiento);
             Tipo= Enum.GetName(typeof(datos.TipoDePersonaje), rand.Next(1, Enum.GetNames(typeof(datos.TipoDePersonaje)).Length));
-}
-}
+            Frutafavorita1 = Getfruta();
+           
+
+         }
+ private static List<fruta> Getfruta(){
+
+            var url = $"https://www.fruityvice.com/api/fruit/all";
+            var request = (HttpWebRequest)WebRequest.Create(url);
+            request.Method = "GET";
+            request.ContentType = "application/json";
+            request.Accept = "application/json";
+
+            string nombre;
+
+
+            try {
+                using (WebResponse response = request.GetResponse()) {
+                    using (Stream strReader = response.GetResponseStream()) {
+                        using (StreamReader objReader = new StreamReader(strReader)) {
+                            string responseBody = objReader.ReadToEnd();
+
+                            List<fruta>frutas = JsonSerializer.Deserialize<List<fruta>>(responseBody);
+                            var rand = new Random();
+                            int index = rand.Next(frutas.Count);
+                            Console.WriteLine( frutas[index].Name);
+                           
+                        }
+                    }
+                }
+            } catch (WebException ex) {
+                Console.WriteLine("error");
+            }
+            return null;
+        }
+
+
+
+
+
+        
+
+    }
 }
