@@ -49,8 +49,11 @@ namespace Juego
         private int edad;
         private float salud;
         private string tipo;
+        private List<fruta> fruta;
 
-        private List<fruta> frutafavorita; 
+        private int cantBatallas;
+
+      
 
 
        
@@ -63,8 +66,8 @@ namespace Juego
         public string Tipo { get => tipo; set => tipo = value; }
        
         public float Salud { get => salud; set => salud = value; }
-        
-        public List<fruta> Frutafavorita1 { get => frutafavorita; set => frutafavorita = value; }
+        public List<fruta> Fruta { get => fruta; set => fruta = value; }
+        public int CantBatallas { get => cantBatallas; set => cantBatallas = value; }
 
         public int calcularEdad(DateTime FechaDeNacimiento)
         {
@@ -84,17 +87,19 @@ namespace Juego
 
 
          public datos(){
+            
             Random rand = new Random();
             Salud=100;
             Nombre1= Enum.GetName(typeof(datos.Nombre), rand.Next(1, Enum.GetNames(typeof(datos.Nombre)).Length));
             FechaDeNacimiento =  new DateTime(rand.Next(1500, 2020), rand.Next(1, 12),rand.Next(1, 31));
             Edad= calcularEdad(FechaDeNacimiento);
             Tipo= Enum.GetName(typeof(datos.TipoDePersonaje), rand.Next(1, Enum.GetNames(typeof(datos.TipoDePersonaje)).Length));
-            Frutafavorita1 = Getfruta();
+            CantBatallas = 0;
+            Fruta = Getfruta();
            
 
          }
- private static List<fruta> Getfruta(){
+          private static List<fruta> Getfruta(){
 
             var url = $"https://www.fruityvice.com/api/fruit/all";
             var request = (HttpWebRequest)WebRequest.Create(url);
@@ -102,7 +107,6 @@ namespace Juego
             request.ContentType = "application/json";
             request.Accept = "application/json";
 
-            string nombre;
 
 
             try {
@@ -114,7 +118,7 @@ namespace Juego
                             List<fruta>frutas = JsonSerializer.Deserialize<List<fruta>>(responseBody);
                             var rand = new Random();
                             int index = rand.Next(frutas.Count);
-                            Console.WriteLine( frutas[index].Name);
+                            Console.WriteLine( "La fruta favorita es " + frutas[index].Name);
                            
                         }
                     }
@@ -125,11 +129,5 @@ namespace Juego
             return null;
         }
 
-
-
-
-
-        
-
-    }
+}
 }

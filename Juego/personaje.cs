@@ -35,9 +35,6 @@ namespace Juego
         Dato.Salud = 100;
       }
     }
-
-
-
  }
 
 

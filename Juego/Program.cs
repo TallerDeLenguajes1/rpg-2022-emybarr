@@ -16,16 +16,40 @@ namespace Juego
         {
           List<personaje> GrupoA= new List<personaje>();
           List<personaje> GrupoB= new List<personaje>();
-          List<personaje> BatallaFinal= new List<personaje>();
           List<personaje> listapersonaje= new List<personaje>();
+          var BatallaFinal= new List<personaje>();
+          var ganadores = new List<string>();
           archivo archivo = new archivo();
           gamePlay game = new gamePlay();
           int opcion, opcionj;
+          var dateAndTime = DateTime.Now;
+          var Date = dateAndTime.ToShortDateString();
        
       
            Random rand = new Random();
+              Console.Clear();
+            var arr = new[]
+            {
+                @"___.   .__                                 .__    .___ ",
+                @"\_ |__ |__| ____   _______  __ ____   ____ |__| __| _/_",
+                @" | __ \|  |/ __ \ /    \  \/ // __ \ /    \|  |/ __ |/  _ \ ",
+                @" | \_\ \  \  ___/|   |  \   /\  ___/|   |  \  / /_/ (  <_> )",
+                @" |_ __ /__|\___  >___|  /\_/  \___  >___|  /__\____ |\____/",
+                @"     \/        \/     \/          \/     \/        \/   ",
+            };
+
+            Console.WindowWidth = 120;
+            Console.WriteLine("\n\n");
+            foreach (string line in arr)
+            {
+                Console.WriteLine(line);
+                Console.ReadKey();
+            }
+            Thread.Sleep(1000);
 do{
+  
          do{
+          
             Console.WriteLine("Seleccione Opcion");
             Console.WriteLine("1 - Iniciar un juego");
             Console.WriteLine("2 - Ganador anterior");
@@ -39,8 +63,8 @@ do{
             Console.WriteLine("Elija la forma de crear los jugadores ");
             do
             {
-            Console.WriteLine(" 1- Crear los 8 jugadores de forma aleatoria ");
-             Console.WriteLine("2- Cargar lista jugadores ");
+              Console.WriteLine(" 1- Crear los jugadores de forma aleatoria ");
+              Console.WriteLine(" 2- Cargar lista jugadores  ");
             opcionj=  Convert.ToInt32(Console.ReadLine());
             }while(opcionj > 2);
 
@@ -53,49 +77,73 @@ do{
           {
             GrupoB.Add(new personaje( new datos(), new caracteristicas()));
           }
+          Console.Clear();
 
           if(opcionj == 1)
           {
+            Console.Clear();
+           
             Console.WriteLine("\n<<<<<<<<< Jugadores del Grupo A <<<<<<<<<<\n");
-            foreach(personaje p in GrupoA){
-              Console.WriteLine(p.Dato.Nombre1);
+             Thread.Sleep(3000);
+            foreach(personaje p in GrupoA)
+            {
+            Console.WriteLine(p.Dato.Nombre1);
             }
-            
             Console.WriteLine("\n<<<<<<<<< Jugadores del Grupo B <<<<<<<<<<\n");
-             foreach(personaje p in GrupoB){
+               Thread.Sleep(3000);
+            foreach(personaje p in GrupoB)
+            {
               Console.WriteLine(p.Dato.Nombre1);
-          
             }
+              Thread.Sleep(3000);
 
           
-
+          Thread.Sleep(1200);
           Console.WriteLine("-------------BATALLAS GRUPO A ------------------");
           game.Pelea(GrupoA);
-
+          Thread.Sleep(1500);
+        
           Console.WriteLine("-------------BATALLAS GRUPO B ------------------");
           game.Pelea(GrupoB);
-
+          Thread.Sleep(1300);
           foreach(personaje per in GrupoA){
                   BatallaFinal.Add(per);
           }
            foreach(personaje per in GrupoB){
                   BatallaFinal.Add(per);
           }
+          Thread.Sleep(2000);
+          
+       
 
           Console.WriteLine("------------------BATLLA FINAL---------------------------");
           game.Pelea(BatallaFinal);
-          Console.WriteLine("------------------GANADOR---------------------------");
+          Console.WriteLine("--------------######GANADOR#######------------------------");
           foreach(personaje per in BatallaFinal){
                   Console.WriteLine("                 " + per.Dato.Nombre1);
+                  Console.WriteLine("          "+"BATALLAS GANADAS "+"  " + per.Dato.CantBatallas); 
+                 
           }
            Console.WriteLine("<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+           Thread.Sleep(2000);
 
-         archivo.guardarvencedor("Ganador",BatallaFinal[0], ".csv");
+           
+
+           foreach(var p in BatallaFinal){
+            ganadores.Add( p.Dato.Nombre1 + ";" + p.Dato.Tipo + ";"+ Date + ";" + p.Dato.CantBatallas);
+           }
+           
+           archivo.CrearCSV(ganadores);
+         
+
+      
+         
 
          }
 
           if(opcionj == 2)
           {
+            Console.Clear();
            string archivoA = "grupoA.json";
            string grupoAJson =JsonSerializer.Serialize(GrupoA);
            archivo.GuardarArchivo(archivoA,grupoAJson);
@@ -116,14 +164,20 @@ do{
            foreach(personaje p in listaGrupoBJson)
            {
             Console.WriteLine(p.Dato.Nombre1);
-       
             
            }
+
+            Thread.Sleep(1200);
            Console.WriteLine("-------------BATALLAS GRUPO A ------------------");
           game.Pelea(GrupoA);
+           Thread.Sleep(1200);
+          
 
           Console.WriteLine("-------------BATALLAS GRUPO B ------------------");
           game.Pelea(GrupoB);
+           Thread.Sleep(1200);
+        
+
 
           foreach(personaje per in GrupoA){
                   BatallaFinal.Add(per);
@@ -131,49 +185,51 @@ do{
            foreach(personaje per in GrupoB){
                   BatallaFinal.Add(per);
           }
+            Thread.Sleep(2000);
 
           Console.WriteLine("------------------BATLLA FINAL---------------------------");
           game.Pelea(BatallaFinal);
-          Console.WriteLine("------------------GANADOR---------------------------");
+          Console.WriteLine("--------------######GANADOR#######------------------------");
+       
           foreach(personaje per in BatallaFinal){
-                  Console.WriteLine("                 " + per.Dato.Nombre1);
-                  Console.WriteLine(per.Dato.Frutafavorita1);
+                  Console.WriteLine("                 " + per.Dato.Nombre1); 
+                   Console.WriteLine("          "+"BATALLAS GANADAS "+" "  + per.Dato.CantBatallas);       
           }
-           Console.WriteLine("<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+        
+          Console.WriteLine("<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+           Thread.Sleep(2000);
 
-         archivo.guardarvencedor("Ganador",BatallaFinal[0], ".csv");
-
+            foreach(var p in BatallaFinal){
+            ganadores.Add( p.Dato.Nombre1 + ";" + p.Dato.Tipo + ";"+ Date + ";" + p.Dato.CantBatallas);
+           }
+           
+           archivo.CrearCSV(ganadores);
 
           }
-
-
+         }
+        
          if(opcion == 2)
          {
-          if (File.Exists("Ganador.csv"))
-                        {
-                            Console.WriteLine("Mostrar Ganador\n");
-                            List<string> lista = new List<string>();
-                            string[] listado;
-                            lista = File.ReadLines("Ganador.csv").ToList();
-                            
-                            foreach (string dato in lista)
-                            {
-                                listado = dato.Split(";");
-                                Console.WriteLine($"Nombre: {listado[0]}");
-                                Console.WriteLine($"Tipo: {listado[1]}");
-                                Console.WriteLine($"Fecha de Batalla: {listado[2]}\n");
-                            }
-
+          List<string[]> LCsv= archivo.LeerCSV("Ganadores.csv", ';');
+          Console.WriteLine("Nombre" + "Tipo" +"Fecha de Combate" + "Cantidad de batllas ");
+   for (int i = LCsv.Count() - 1; i >= 0; i--)
+    {
+        Console.WriteLine(LCsv[i][0] + " - " + LCsv[i][1] + " - " + LCsv[i][2]+ " - " + LCsv[i][3]);
+    }
          }
-         }
+    }while(opcion != 3);
 }
-    }while(opcion !=3);
-        }
 
-        
-    }
+                         
+                           
+         }
+         }
+                            
+         
+
+    
 
 
-    }
-
+    
+    
 
